@@ -1,0 +1,8 @@
+127.0.0.1 - - [23/Jul/2015:09:38:34 +0700] "GET /phalcon-api HTTP/1.1" 301 336 "-" "curl/7.33.0"
+127.0.0.1 - - [23/Jul/2015:09:39:11 +0700] "GET /phalcon-api/ HTTP/1.1" 200 512 "-" "curl/7.33.0"
+127.0.0.1 - - [23/Jul/2015:09:39:20 +0700] "GET /phalcon-api/simplerestapi/ HTTP/1.1" 200 1773 "-" "curl/7.33.0"
+127.0.0.1 - - [23/Jul/2015:09:39:35 +0700] "GET /phalcon-api/simplerestapi/say/welcome/siwaphol HTTP/1.1" 200 17 "-" "curl/7.33.0"
+::1 - - [31/May/2015:16:49:38 +0700] "GET /favicon.ico HTTP/1.1" 200 7782 "http://localhost/laravel/public/articles" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+::1 - - [31/May/2015:16:49:52 +0700] "GET /laravel/public/articles/create HTTP/1.1" 200 1234 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+::1 - - [31/May/2015:16:50:04 +0700] "GET /laravel/public/articles/create HTTP/1.1" 200 1234 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"
+::1 - - [01/Jun/2015:02:14:00 +0700] "GET /JWT HTTP/1.1" 301 328 "-" "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/43.0.2357.81 Safari/537.36"

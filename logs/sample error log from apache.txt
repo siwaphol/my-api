@@ -1,0 +1,6 @@
+[Mon Jun 22 15:56:16.644068 2015] [core:error] [pid 2040:tid 1732] (22)Invalid argument: [client ::1:30050] AH00127: Cannot map GET /bootstraplistr/ver220/dist/%CA%D2%C3%BA%D1%AD.docx HTTP/1.1 to file, referer: http://localhost/bootstraplistr/ver220/dist/
+[Mon Jun 22 15:56:45.751786 2015] [core:error] [pid 2040:tid 1740] (22)Invalid argument: [client ::1:30059] AH00127: Cannot map GET /bootstraplistr/ver220/dist/present%20%CA%CB%A1%D4%A8%202.pptx HTTP/1.1 to file, referer: http://localhost/bootstraplistr/ver220/dist/
+[Mon Jun 22 15:57:01.032490 2015] [core:error] [pid 2040:tid 1728] (22)Invalid argument: [client ::1:30062] AH00127: Cannot map GET /bootstraplistr/ver220/dist/present%20%CA%CB%A1%D4%A8%202.pptx HTTP/1.1 to file, referer: http://localhost/bootstraplistr/ver220/dist/
+[Tue Jul 21 23:21:18.477686 2015] [:error] [pid 3348:tid 1736] [client ::1:52195] script 'C:/xampp/htdocs/login.php' not found or unable to stat
+[Tue Jul 21 23:22:35.294414 2015] [:error] [pid 3348:tid 1736] [client ::1:52200] script 'C:/xampp/htdocs/login.php' not found or unable to stat, referer: http://localhost/sp-simple-jwt-master/public/
+[Tue Jul 21 23:26:03.207569 2015] [:error] [pid 3348:tid 1724] [client ::1:52317] script 'C:/xampp/htdocs/login.php' not found or unable to stat, referer: http://localhost/sp-simple-jwt-master/public/
