@@ -1,2 +1,7 @@
 [Thu, 23 Jul 15 12:23:51 +0700][INFO] This is a message Server IP=::1 Client IP=::1
 [Thu, 23 Jul 15 12:28:37 +0700][INFO] This is a message Server IP=::1 Client IP=::1
+[Sat, 25 Jul 15 14:37:09 +0700][ERROR] [Bootstrap.php]: SQLSTATE[HY000] [1049] Unknown database 'webauth1'
+[Sat, 25 Jul 15 15:27:39 +0700][DEBUG] testing
+[Sat, 25 Jul 15 15:28:09 +0700][INFO] testing
+[Sat, 25 Jul 15 15:58:42 +0700][DEBUG] testing
+[Sat, 25 Jul 15 16:00:03 +0700][INFO] This is a message Server IP=::1 Client IP=::1
