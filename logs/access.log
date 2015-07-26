@@ -5,3 +5,11 @@
 [Sat, 25 Jul 15 15:28:09 +0700][INFO] testing
 [Sat, 25 Jul 15 15:58:42 +0700][DEBUG] testing
 [Sat, 25 Jul 15 16:00:03 +0700][INFO] This is a message Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:30:28 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:30:48 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:31:06 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:32:10 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:33:18 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:34:48 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:37:30 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+[Sun, 26 Jul 15 13:41:07 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
