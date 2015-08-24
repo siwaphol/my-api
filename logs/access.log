@@ -1,15 +1,1 @@
-[Thu, 23 Jul 15 12:23:51 +0700][INFO] This is a message Server IP=::1 Client IP=::1
-[Thu, 23 Jul 15 12:28:37 +0700][INFO] This is a message Server IP=::1 Client IP=::1
-[Sat, 25 Jul 15 14:37:09 +0700][ERROR] [Bootstrap.php]: SQLSTATE[HY000] [1049] Unknown database 'webauth1'
-[Sat, 25 Jul 15 15:27:39 +0700][DEBUG] testing
-[Sat, 25 Jul 15 15:28:09 +0700][INFO] testing
-[Sat, 25 Jul 15 15:58:42 +0700][DEBUG] testing
-[Sat, 25 Jul 15 16:00:03 +0700][INFO] This is a message Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:30:28 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:30:48 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:31:06 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:32:10 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:33:18 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:34:48 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:37:30 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
-[Sun, 26 Jul 15 13:41:07 +0700][INFO]  Client IP=::1 -  Server IP=::1 Client IP=::1
+::1 CMUMIS [Thu, 23 Jul 15 12:23:51 +0700] "GET /getUserInfo?username=&appid=CMUMIS&access_token=123abc&signature=OtxrzxIsfpFjA7SwPzIL"  200

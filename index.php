@@ -32,7 +32,10 @@ try {
     $app = new \NDN\Bootstrap($di);
 
     $di = $app->run(array());
-    $connection = $di->get('db');
+
+    //run tomorrow
+    //$connection = $di->get('db');
+    //run tomorrow
 
 //    $key     = 'qwertyuiopasdfgh';
 //    $text    = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
@@ -69,11 +72,13 @@ try {
             $queryStringNotEmpty = !empty($app->request->getQuery('username')) &&!empty($app->request->getQuery('password')) &&!empty($app->request->getQuery('appid'));
 
             if($queryStringComplete&&$queryStringNotEmpty){
-                $sql = "SELECT * FROM applications";
-                $result = $app->getDI()->get('db')->query($sql);
-                while ($robot = $result->fetch()) {
-                    echo $robot["app_id"];
-                }
+                //run tomorrow
+                // $sql = "SELECT * FROM applications"; 
+                // $result = $app->getDI()->get('db')->query($sql);
+                // while ($robot = $result->fetch()) {
+                //     echo $robot["app_id"];
+                // }
+                //run tomorrow
                 echo "username: ".$app->request->getQuery('username')."</br>password: ".$app->request->getQuery('password')."</br>appid: ".$app->request->getQuery('appid'). "</br>";
             }else{
                 $app->response->setStatusCode(400, "Bad Request")->sendHeaders();
@@ -92,7 +97,7 @@ try {
         $app->notFound(
             function () use ( $app ) {
                 $app->response->setStatusCode( 404, "Not Found" )->sendHeaders();
-                echo 'This is crazy, but this page was not found!';
+                echo 'page not found';
             }
         );
         $app->handle();
