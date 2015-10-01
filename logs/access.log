@@ -1,1 +1,1 @@
-::1 CMUMIS [Thu, 23 Jul 15 12:23:51 +0700] "GET /getUserInfo?username=&appid=CMUMIS&access_token=123abc&signature=OtxrzxIsfpFjA7SwPzIL"  200
+202.24.21.215 CMUMIS [Thu, 23 Jul 15 12:23:51 +0700] "GET /userinfo?access_token=sdfSAsdf123a&username=siwaphol_boonpan&appid=CMUMIS&signature=OtxrzxIsfpFjA7SwPzIL HTTP/1.0"  200 336

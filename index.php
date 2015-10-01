@@ -12,15 +12,15 @@ error_reporting(E_ALL);
 
 try {
 
-    if (!defined('ROOT_PATH')) {
-        define('ROOT_PATH', dirname(dirname(__FILE__)));
+    if (!defined("ROOT_PATH")) {
+        define("ROOT_PATH", dirname(dirname(__FILE__)));
     }
 
     // Using require once because I want to get the specific
     // bootloader class here. The loader will be initialized
     // in my bootstrap class
-    require_once 'libs/Bootstrap.php';
-    require_once 'libs/Error.php';
+    require_once "libs/Bootstrap.php";
+    require_once "libs/Error.php";
 
     $error_logger = new PhLoggerFile("logs/error.log");
     $formatter = new PhLoggerFormatter("[%date%][%type%] %message%");
@@ -33,22 +33,43 @@ try {
 
     $di = $app->run(array());
 
-    //run tomorrow
-    //$connection = $di->get('db');
-    //run tomorrow
+    //test
+    $connection = $di->get("db");
 
-//    $key     = 'qwertyuiopasdfgh';
-//    $text    = '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+//    $resultset = $connection->query("SELECT * FROM applications");
+//    if($resultset){
+//        echo "ha you got me";
+//    }
+//    $robot = $connection->fetchOne("SELECT * FROM applications");
+//    print_r($robot["secret"]);
+
+    //end test
+
+//    $key     = "qwertyuiopasdfgh";
+//    $text    = "12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
 //
-//    $hash = hash_hmac ('sha1', $text, $key);
+//    $hash = hash_hmac ("sha1", $text, $key);
 //    echo "HMAC: " .$hash."</br>";
 //    $encrypt = $crypt->encryptBase64($hash, $key);
 //
 //    echo "Base64 digest: " . $encrypt ."</br>";
 //    echo "real text after Base64 decrypt: ".$crypt->decryptBase64($encrypt, $key);
-//    echo "real text after HMAC decrypt: ".hash_hmac('sha1',$crypt->decryptBase64($encrypt, $key),$key);
+//    echo "real text after HMAC decrypt: ".hash_hmac("sha1",$crypt->decryptBase64($encrypt, $key),$key);
 //    echo "</br>". base64_encode($text);
 //    die;
+//    function createStringToSign($http_method, $uri, $variable, $timestamp){
+//        return $http_method . "\n" .$uri . "\n" . $variable . "\n" . $timestamp;
+//    }
+    function createSignature($stringToSign, $secret){
+        return base64_encode(hash_hmac("sha256", $stringToSign, $secret));
+    }
+    function isAcceptTimeStamp($timestamp){
+        date_default_timezone_set("Asia/Bangkok");
+        return $timestamp > time() - 300 && $timestamp < time() + 300;
+    }
+    function checkSignature($recv_sig, $created_sig){
+        return $recv_sig === $created_sig;
+    }
 
     if(!is_null($connection)){
         $di["response"] = function () {
@@ -59,111 +80,80 @@ try {
         };
         $app = new Micro();
         $app->setDI( $di );
-//        $app->get( '/api', function () use ( $app ) {
-//            $serverIpAddressString = " Server IP=" . $app->request->getServerAddress();
-//            $clientIpAddressString = " Client IP=" . $app->request->getClientAddress();
-//            $app->getDI()->get('logger')->log( $clientIpAddressString .' - '. $serverIpAddressString . $clientIpAddressString,\Phalcon\Logger::INFO);
-//            $year = $app->request;
-//            echo "Welcome " . $year . "</br>";
-//
-//        } );
-        $app->get("/login?{query_string}", function () use ($app) {
-            $queryStringComplete = $app->request->hasQuery('username') && $app->request->hasQuery('password') && $app->request->hasQuery('appid');
-            $queryStringNotEmpty = !empty($app->request->getQuery('username')) &&!empty($app->request->getQuery('password')) &&!empty($app->request->getQuery('appid'));
+        $timestamp = $app->request->getHeader("X-TimeStamp");
+        if(!empty($timestamp)){
+            echo "X-TimeStamp just came in " . $timestamp . "<br>";
+        }
+        if(!isAcceptTimeStamp($timestamp)){
+            $app->response->setStatusCode(400, "Bad Request")->sendHeaders();
+        }
+        //Login Service
+        $app->post("/login", function () use ($app) {
+            $param1 = "appid";
+            $param2 = "password";
+            $optional_param1 = "userinfo";
+            $param3 = "username";
+            $param4 = "signature";
+
+            $record = $this->connection->fetchOne("SELECT * FROM applications WHERE appid='CMUMIS'");
+
+            $queryStringComplete = $app->request->hasPost($param1) && $app->request->hasPost($param2) && $app->request->hasPost($param3) && $app->request->hasPost($param4);
+            $queryStringNotEmpty = !empty($app->request->getPost($param1)) &&!empty($app->request->getPost($param2)) && !empty($app->request->getPost($param3)) && !empty($app->request->getPost($param4));
 
             if($queryStringComplete&&$queryStringNotEmpty){
-                //run tomorrow
-                // $sql = "SELECT * FROM applications"; 
-                // $result = $app->getDI()->get('db')->query($sql);
-                // while ($robot = $result->fetch()) {
-                //     echo $robot["app_id"];
-                // }
-                //run tomorrow
-                echo "username: ".$app->request->getQuery('username')."</br>password: ".$app->request->getQuery('password')."</br>appid: ".$app->request->getQuery('appid'). "</br>";
+                if($app->request->hasPost($optional_param1) && !empty($app->request->getPost($optional_param1))){
+                    $sorted_variable = $param1 . "=" . $app->request->getPost($param1) .
+                        "&" . $param2 ."=" . $app->request->getPost($param2) .
+                        "&" . $optional_param1 . "=" . $app->request->getPost($optional_param1) .
+                        "&" . $param3 . "=" . $app->request->getPost($param3);
+                }else{
+                    $sorted_variable = $param1 . "=" . $app->request->getPost($param1) .
+                        "&" . $param2 ."=" . $app->request->getPost($param2) .
+                        "&" . $param3 . "=" . $app->request->getPost($param3);
+                }
+                $stringToSign = "POST\n" ."/login\n" . $sorted_variable . "\n" . $app->request->getHeader("X-TimeStamp");
+                //test
+                $signature = createSignature($stringToSign, $record["secret"]);
+                echo $signature;
+                //end test
             }else{
                 $app->response->setStatusCode(400, "Bad Request")->sendHeaders();
             }
         });
-        $app->get( '/getUserInfo', function () use ( $app ) {
-            $queryStringComplete = $app->request->hasQuery('username') && $app->request->hasQuery('access_token') && $app->request->hasQuery('appid');
-            $queryStringNotEmpty = !empty($app->request->getQuery('username')) &&!empty($app->request->getQuery('access_token')) &&!empty($app->request->getQuery('appid'));
+        //Get User data Service
+        $app->get( "/userinfo?{query_string}", function () use ( $app ) {
+            $param1 = "access_token";
+            $param2 = "appid";
+            $param3 = "username";
+            $param4 = "signature";
+
+            $queryStringComplete = $app->request->hasQuery($param1) && $app->request->hasQuery($param2) && $app->request->hasQuery($param3) && $app->request->hasQuery($param4);
+            $queryStringNotEmpty = !empty($app->request->getQuery($param1)) && $app->request->hasQuery($param2) &&!empty($app->request->getQuery($param3)) &&!empty($app->request->getQuery($param4));
 
             if($queryStringComplete&&$queryStringNotEmpty){
-                echo "username: ".$app->request->getQuery('username')."</br>access_token: ".$app->request->getQuery('access_token')."</br>appid: ".$app->request->getQuery('appid'). "</br>";
+                $sorted_variable = $param1 . "=" . $app->request->getPost($param1) .
+                    "&" . $param2 ."=" . $app->request->getPost($param2) .
+                    "&" . $param3 . "=" . $app->request->getPost($param3);
+                $stringToSign = "GET\n" ."/userinfo\n" . $sorted_variable . "\n" . $app->request->getHeader("X-TimeStamp");
+                //test
+                $signature = createSignature($stringToSign, "mysecret555");
+                //end test
             }else{
                 $app->response->setStatusCode(400, "Bad Request")->sendHeaders();
             }
         } );
+
         $app->notFound(
             function () use ( $app ) {
                 $app->response->setStatusCode( 404, "Not Found" )->sendHeaders();
-                echo 'page not found';
             }
         );
         $app->handle();
     }
 
 } catch (\Phalcon\Exception $e) {
-    $error_logger->log('['. __FILE__ .']' . $e->getMessage(),\Phalcon\Logger::ERROR);
+    $error_logger->log("[". __FILE__ ."]" . $e->getMessage(),\Phalcon\Logger::ERROR);
     $response = new Response();
     $response->setStatusCode(500, "Internal Server Error");
     $response->send();
 }
-
-
-
-
-//use Phalcon\DI\FactoryDefault,
-//	Phalcon\Mvc\Micro,
-//	Phalcon\Http\Response,
-//	Phalcon\Http\Request,
-//	Phalcon\Logger\Adapter\File as FileAdapter,
-//	Phalcon\Config\Adapter\Ini as ConfigIni;
-//
-////Initialize variables
-//$di = new FactoryDefault();
-//$config = new ConfigIni("config/config.ini");
-//$database_settings = array(
-//	"host" => $config->database->host,
-//	//"port" => "",
-//	"username" => $config->database->username,
-//	"password" => $config->database->password,
-//	"dbname" => $config->database->dbname
-//	);
-//$database_settings["persistent"] = false;
-//$connection = new \Phalcon\Db\Adapter\Pdo\Mysql($database_settings);
-//
-////Using an anonymous function, the instance will be lazy loaded
-//$di["response"] = function () {
-//	return new Response();
-//};
-//$di["request"] = function () {
-//	return new Request();
-//};
-//
-//$app = new Micro();
-//$app->setDI( $di );
-//$app->get( '/api', function () use ( $app ) {
-//	$logger = new FileAdapter("logs/access.log");
-//	$serverIpAddressString = " Server IP=" . $app->request->getServerAddress();
-//	$clientIpAddressString = " Client IP=" . $app->request->getClientAddress();
-//	$logger->log("This is a message" . $serverIpAddressString . $clientIpAddressString,\Phalcon\Logger::INFO);
-//	echo "Welcome" . "</br>";
-//	if ($app->request->isSecureRequest()) {
-//    	echo "The request was made using a secure layer";
-//	}else{
-//		echo "The request was not made using a secure layer";
-//	}
-//
-//} );
-//$app->post( '/api', function () use ( $app ) {
-//	$post = $app->request->getPost();
-//	print_r( $post );
-//} );
-//$app->notFound(
-//	function () use ( $app ) {
-//		$app->response->setStatusCode( 404, "Not Found" )->sendHeaders();
-//		echo 'This is crazy, but this page was not found!';
-//	}
-//);
-//$app->handle();
